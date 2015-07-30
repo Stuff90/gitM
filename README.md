@@ -1,0 +1,2 @@
+# gitM
+Git manager
