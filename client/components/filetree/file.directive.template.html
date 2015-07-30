@@ -1,0 +1,4 @@
+<li ng-class="file.type == 'directory' ? 'node--directory' : 'node--file'">
+    <span ng-if="file.type == 'directory'" class="node--trigger--open glyphicon" ng-class="file.open ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" aria-hidden="true" ng-click="toggle(file)"></span>
+    {{file.name}}
+</li>
