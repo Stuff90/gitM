@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('gitMApp')
-    .controller('NavbarCtrl', function ($scope, $location) {
-        console.info('NavbarCtrl');
+    .controller('NavbarController', function ($scope, $location) {
+        console.info('NavbarController');
 
         $scope.menu = [{
             'title': 'Home',

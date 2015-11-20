@@ -57,14 +57,16 @@
 
 /* End of reset library */
 
-@import 'bootstrap/less/bootstrap.less';
+// @import 'bootstrap/less/bootstrap.less';
 @import 'font-awesome/less/font-awesome.less';
 @import 'lesshat/build/lesshat';
 @import 'remixins/remixins.less';
 
-
-@icon-font-path: '/bower_components/bootstrap/fonts/';
-@fa-font-path: '/bower_components/font-awesome/fonts';
+html, body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+// @icon-font-path: '/bower_components/bootstrap/fonts/';
+// @fa-font-path: '/bower_components/font-awesome/fonts';
 
 /**
  * App-wide Styles
@@ -83,5 +85,6 @@
 @import 'main/main.less';
 @import 'navbar/navbar.less';
 @import 'stdOut/stdOut.less';
+@import 'filetree/filetree.directive.less';
 @import 'modal/modal.less';
 // endinjector

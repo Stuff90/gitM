@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./filetree.controller');
+var controller = require('./file.controller');
 
 var router = express.Router();
 

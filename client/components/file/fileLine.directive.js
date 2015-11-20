@@ -1,8 +1,7 @@
 'use strict';
 
-
 angular.module('gitMApp')
-    .directive('file', function ($compile) {
+    .directive('file', [ '$compile' , function ($compile) {
         return {
             restrict: "E",
             replace: true,
@@ -10,6 +9,7 @@ angular.module('gitMApp')
                 file: '='
             },
             templateUrl: "/components/filetree/file.directive.template.html",
+
             link: function (scope, element, attrs) {
 
                 scope.toggle = function(data){
@@ -22,4 +22,4 @@ angular.module('gitMApp')
                 }
             }
         }
-    });
+    }]);

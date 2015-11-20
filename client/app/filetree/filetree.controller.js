@@ -1,17 +1,24 @@
 'use strict';
 
 angular.module('gitMApp')
-    .controller('FiletreeCtrl', function ($scope, $http , socket) {
-        console.info('FiletreeCtrl');
+    .controller('FiletreeController', [ '$scope', 'ApiService' , 'socket' , function ($scope , ApiService , socket ) {
 
-        $scope.filteTreeData = [];
+        console.info('FiletreeController');
 
-        $scope.getFiletree = function() {
-            $http.get('/api/filetrees').success(function(root) {
-                root.open = true;
-                $scope.filteTreeData = root.children;
+        $scope.filteTreeData    = false;
+        $scope.isLoading        = false;
+        $scope.path             = '/Users/simon/sample/';
+
+
+        $scope.loadFiltree = function() {
+            $scope.isLoading     = true;
+            $scope.filteTreeData = false;
+
+            ApiService.getFileTree($scope.path).then(function(filetree){
+                $scope.isLoading     = false;
+                $scope.filteTreeData = filetree.data;
             });
         }
 
-        $scope.getFiletree();
-  });
+        $scope.loadFiltree();
+  }]);

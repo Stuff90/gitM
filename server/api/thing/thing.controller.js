@@ -10,12 +10,17 @@
 'use strict';
 
 var dirTree = require('directory-tree');
+// var simpleGit = require('simple-git')('/Applications/MAMP/htdocs/LessTree');
+
 
 // Get list of things
 exports.index = function(req, res) {
 
   var tree = dirTree.directoryTree('.');
 
+    // simpleGit.log(function(err, log) {
+    //     console.log(log);
+        res.json('log')
+    // })
 
-  res.json(tree)
 };

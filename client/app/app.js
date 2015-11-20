@@ -6,7 +6,9 @@ angular.module('gitMApp', [
         'ngSanitize',
         'btford.socket-io',
         'ui.router',
-        'ui.bootstrap'
+        'ngMaterial',
+        'ngMessages',
+        'ngMdIcons',
     ])
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise('/');
@@ -22,19 +24,19 @@ angular.module('gitMApp', [
                     },
                     "header@index": {
                         templateUrl: "/app/navbar/navbar.html",
-                        controller: "NavbarCtrl"
+                        controller: "NavbarController"
                     },
                     "leftColumn@index": {
                         templateUrl: "/app/filetree/filetree.html",
-                        controller: "FiletreeCtrl"
+                        controller: "FiletreeController"
                     },
+                    // "rightColumn@index": {
+                    //     templateUrl: "/app/stdOut/stdOut.html",
+                    //     controller: "StdOutCtrl"
+                    // },
                     "center@index": {
-                        templateUrl: "/app/stdOut/stdOut.html",
-                        controller: "StdOutCtrl"
-                    },
-                    "rightColumn@index": {
                         templateUrl: "/app/file/file.html",
-                        controller: "FileCtrl"
+                        controller: "FileController"
                     }
                 }
             });
@@ -42,5 +44,7 @@ angular.module('gitMApp', [
         $locationProvider.html5Mode(true);
     }).
     factory('socket', function (socketFactory) {
-        return socketFactory();
+        return socketFactory({
+            ioSocket: io.connect('http://localhost:9000')
+        });
     });

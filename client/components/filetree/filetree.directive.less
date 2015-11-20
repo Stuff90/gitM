@@ -1,0 +1,15 @@
+.filetree {
+    padding-left:20px;
+
+    > .filetree {
+        display:none;
+    }
+
+    > :not(.md-primary) {
+        text-transform:initial;
+    }
+
+    &.expanded > .filetree {
+        display:block;
+    }
+}

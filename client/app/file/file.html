@@ -1,1 +1,19 @@
-<p>File coucou</p>
+<md-content layout-padding layout-margin ng-if="fileDisplayed" class="file">
+    <h3 class="md-subhead">{{ file.path }}</h3>
+    <h1 class="md-headline"><ng-md-icon icon="insert_drive_file" style="fill:grey" size="24"></ng-md-icon> {{ file.name }}</h1>
+
+    <md-content layout-padding md-border>
+        <md-tabs md-dynamic-height>
+            <md-tab label="content" >
+                <md-content class="md-padding">
+                    <p ng-repeat="line in file.content">{{ line }}</p>
+                </md-content>
+            </md-tab>
+            <md-tab label="diff">
+                <md-content class="md-padding">
+                    <p ng-repeat="line in file.content">{{ line }}</p>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</md-content>
