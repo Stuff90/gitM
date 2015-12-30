@@ -14,7 +14,11 @@ angular.module('gitMApp', [
 
         'wordpressGenerator',
     ])
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config([ '$stateProvider' , '$urlRouterProvider' , '$locationProvider' , 'localStorageServiceProvider' , function( $stateProvider , $urlRouterProvider , $locationProvider , localStorageServiceProvider ) {
+        localStorageServiceProvider
+            .setPrefix('gitMApp')
+            .setNotify(true, true);
+
         $urlRouterProvider.otherwise('/');
 
         $stateProvider
@@ -30,15 +34,52 @@ angular.module('gitMApp', [
                         templateUrl: "/app/navbar/navbar.html",
                         controller: "NavbarController"
                     },
-                    "leftColumn@index": {
+                    "menu@index": {
+                        templateUrl: "/app/menu/menu.html",
+                        controller: "MenuController"
+                    },
+                }
+            })
+            .state('project:new', {
+                url: '/project/new',
+                templateUrl:'/app/main/main.html',
+                params: { config: null },
+                views: {
+                    "main": {
+                        templateUrl: "/app/main/main.html",
+                        controller: "MainCtrl"
+                    },
+                    "header@project:new": {
+                        templateUrl: "/app/project/project.html",
+                        controller: "ProjectController",
+                    },
+                    "menu@project:new": {
+                        templateUrl: "/app/menu/menu.html",
+                        controller: "MenuController"
+                    },
+                }
+            })
+            .state('project', {
+                url: '/project',
+                templateUrl:'/app/main/main.html',
+                views: {
+                    "main": {
+                        templateUrl: "/app/main/main.html",
+                        controller: "MainCtrl"
+                    },
+                    "header@project": {
+                        templateUrl: "/app/navbar/navbar.html",
+                        controller: "NavbarController"
+                    },
+                    "leftColumn@project": {
                         templateUrl: "/app/filetree/filetree.html",
                         controller: "FiletreeController"
                     },
-                    // "rightColumn@index": {
-                    //     templateUrl: "/app/stdOut/stdOut.html",
-                    //     controller: "StdOutCtrl"
-                    // },
-                    "center@index": {
+                    "menu@project": {
+                        templateUrl: "/app/menu/menu.html",
+                        controller: "MenuController"
+                    },
+                    "center@project": {
                         templateUrl: "/app/file/file.html",
                         controller: "FileController"
                     }
@@ -46,7 +87,7 @@ angular.module('gitMApp', [
             });
 
         $locationProvider.html5Mode(true);
-    }).
+    }]).
     factory('socket', function (socketFactory) {
         return socketFactory({
             ioSocket: io.connect('http://localhost:9000')
