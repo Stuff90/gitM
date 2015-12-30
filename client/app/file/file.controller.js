@@ -2,7 +2,6 @@
 
 angular.module('gitMApp')
     .controller('FileController',[ '$scope', '$http' , 'socket' , 'FileService' , function ($scope, $http , socket , FileService ) {
-        console.info('FileController');
 
         /**
          *

@@ -2,7 +2,6 @@
 
 angular.module('gitMApp')
     .controller('FiletreeController', [ '$scope', 'ApiService' , 'socket' , function ($scope , ApiService , socket ) {
-
         console.info('FiletreeController');
 
         $scope.filteTreeData    = false;
