@@ -9,6 +9,9 @@ angular.module('gitMApp', [
         'ngMaterial',
         'ngMessages',
         'ngMdIcons',
+        'ngDialog',
+
+        'wordpressGenerator',
     ])
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise('/');
