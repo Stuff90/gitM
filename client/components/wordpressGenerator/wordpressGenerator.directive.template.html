@@ -1,1 +1,71 @@
-<p>miugliug</p>
+<section layout-padding>
+    <h3 class="md-display-1">Wordpress</h3>
+
+    <form layout="row"  ng-submit="generate(config)" layout-wrap>
+        <div flex="50" layout-padding>
+            <md-content>
+                <md-input-container>
+                    <label>Select the Wordpress branch</label>
+                    <md-select ng-model="selectedBranch" md-on-open="getAlBranches()" style="min-width: 200px;">
+                        <md-option ng-repeat="aBranch in allBranches" value="{{ aBranch.name }}"> {{ aBranch.name }} </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <md-switch ng-model="config.git" aria-label="Switch 1">
+                        Add git init
+                    </md-switch>
+                </md-input-container>
+                <md-button class="md-raised md-primary" ng-disabled="!config.branch || ongoing">Create</md-button>
+            </md-content>
+        </div>
+        <div flex="50" layout-padding>
+            <md-card layout-padding>
+                <md-card-title>
+                    <md-card-title-text>
+                        <p class="md-headline">{{ config.name }}</p>
+                        <p class="md-subheader">A Wordpress generated project</p>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p class="md-body-2">Author: <a class="md-body-1" href="{{ config.authorUrl }}" target="_blank">{{ config.name }}</a></p>
+                    <p class="md-body-2">Description:</p>
+                    <p class="md-body-1">{{ config.description }}</p>
+                    <p class="md-body-2">Theme name: <span class="md-body-1">{{ config.themeName }} ({{ config.themeVersion }})</span></p>
+                </md-card-content>
+            </md-card>
+        </div>
+    </form>
+
+    <md-content>
+        <md-list>
+            <md-list-item class="md-3-line" >
+                <ng-md-icon icon="timer" style="fill:grey" size="32" ng-if="status.todo.clone"></ng-md-icon>
+                <ng-md-icon icon="done" style="fill:green" size="32" ng-if="status.done.clone"></ng-md-icon>
+                <md-progress-circular md-mode="indeterminate" md-diameter="25" class="md-warn" ng-if="!status.todo.clone && !status.done.clone"></md-progress-circular>
+                <div class="md-list-item-text" layout="column">
+                    <h3>Clone</h3>
+                    <h4>Wordpress is cloning from <a target="_blank" href="https://github.com/WordPress/WordPress">Github</a> official repository</h4>
+                    <p>This may take a while</p>
+                </div>
+            </md-list-item>
+            <md-list-item class="md-3-line" >
+                <ng-md-icon icon="timer" style="fill:grey" size="32" ng-if="status.todo.checkout"></ng-md-icon>
+                <ng-md-icon icon="done" style="fill:green" size="32" ng-if="status.done.checkout"></ng-md-icon>
+                <md-progress-circular md-mode="indeterminate" md-diameter="25" class="md-warn" ng-if="!status.todo.checkout && !status.done.checkout"></md-progress-circular>
+                <div class="md-list-item-text" layout="column">
+                    <h3>Checkout</h3>
+                    <h4>Change current branch to <span class="md-body-2">{{ config.branch }}</span></h4>
+                    <p>Cloning Wordpress</p>
+                </div>
+            </md-list-item>
+            <md-list-item class="md-3-line" >
+                <ng-md-icon icon="timer" style="fill:grey" size="32"></ng-md-icon>
+                <div class="md-list-item-text" layout="column">
+                    <h3>Cloning Wordpress</h3>
+                    <h4>Cloning Wordpress</h4>
+                    <p>Cloning Wordpress</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</section>

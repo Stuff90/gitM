@@ -1,0 +1,16 @@
+<main layout="row">
+    <section flex="40" layout-padding>
+        <h3 class="md-display-1">Generate project</h3>
+        <form name="pathForm">
+            <md-content layout-padding>
+                <md-input-container flex>
+                    <label>Project path</label>
+                    <input required name="projectPath" ng-model="path">
+                </md-input-container>
+            </md-content>
+        </form>
+    </section>
+    <section flex="60">
+        <wordpress-gn config="genConfig" path="path"></wordpress-gn>
+    </section>
+</main>
