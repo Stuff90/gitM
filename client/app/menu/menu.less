@@ -1,0 +1,22 @@
+#view-menu >  * {
+    position: fixed;
+    z-index: 99999;
+    width:100%;
+    right:0;
+    top:0;
+
+    &.md-is-open [icon='menu'] svg {
+        opacity:0;
+    }
+    &:not(.md-is-open) [icon='menu'] svg {
+        opacity:1;
+        z-index:99;
+        position: absolute;
+        transition:opacity 1ms 400ms ease;
+    }
+}
+
+
+// #new-project-form-template {
+
+// }
