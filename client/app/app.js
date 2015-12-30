@@ -1,15 +1,16 @@
 'use strict';
 
 angular.module('gitMApp', [
+        'ngDialog',
         'ngCookies',
-        'ngResource',
-        'ngSanitize',
-        'btford.socket-io',
+        'ngMdIcons',
         'ui.router',
+        'ngSanitize',
         'ngMaterial',
         'ngMessages',
-        'ngMdIcons',
-        'ngDialog',
+        'ngResource',
+        'btford.socket-io',
+        'LocalStorageModule',
 
         'wordpressGenerator',
     ])
