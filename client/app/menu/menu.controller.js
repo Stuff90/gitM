@@ -11,7 +11,6 @@ angular.module('gitMApp')
 
         $scope.open = false;
         $scope.newProject = newProjectModal;
-        // $scope.manageGenerator = newProjectModal;
 
 
 

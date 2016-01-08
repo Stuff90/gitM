@@ -44,7 +44,7 @@ class ProjectGenerator {
         }
     }
 
-    cloneRepository( config , callback ) {
+    cloneRepository( config , callback ) {
         clone( config.gitRepoUrl , config.path , { checkout: config.branch }, statusCode => {
             callback({
                 route: 'api/project/new',
@@ -56,7 +56,7 @@ class ProjectGenerator {
         })
     }
 
-    checkout( config , callback ) {
+    checkout( config , callback ) {
         var cmd = 'cd ' + config.path + '; git checkout ' + config.branch;
 
         exec( cmd , (error , stdout , stderr ) => {
@@ -72,7 +72,7 @@ class ProjectGenerator {
         })
     }
 
-    removeGitDir( config , callback ) {
+    removeGitDir( config , callback ) {
         var cmd = 'cd ' + config.path + '; rm -Rf .git';
 
         exec( cmd , (error , stdout , stderr ) => {
@@ -88,7 +88,7 @@ class ProjectGenerator {
         })
     }
 
-    initGit( config , callback ) {
+    initGit( config , callback ) {
         var cmd = 'cd ' + config.path + '; git init';
 
         exec( cmd , (error , stdout , stderr ) => {
@@ -104,7 +104,7 @@ class ProjectGenerator {
         })
     }
 
-    wordpressBoilerPlateClone( config , callback ) {
+    wordpressBoilerPlateClone( config , callback ) {
         clone( 'https://github.com/Stuff90/wp-boilerplate.git' , config.path + '/.cache-gitM' , statusCode => {
             callback({
                 route: 'api/project/new',
@@ -117,7 +117,7 @@ class ProjectGenerator {
     }
 
 
-    wordpressBoilerPlateInstall( config , callback ) {
+    wordpressBoilerPlateInstall( config , callback ) {
         var tmpPath = config.path + '/.cache-gitM';
 
         async.parallel({

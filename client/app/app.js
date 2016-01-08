@@ -11,7 +11,6 @@ angular.module('gitMApp', [
         'ngResource',
         'btford.socket-io',
         'LocalStorageModule',
-
         'stepListModule',
         'wordpressGenerator',
     ])
