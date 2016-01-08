@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+    <md-content layout-padding layout-margin class="autoScroll">
+        <h3 class="md-headline">Filetree</h3>
+        <form>
+            <md-input-container flex>
+                <label>Path</label>
+                <input ng-model="path" type="text">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="loadFiltree()">Update</md-button>
+        </form>
+    </md-content>
+
+
+    <md-content layout-padding layout-margin class="autoScroll">
+        <md-progress-circular ng-if="isLoading" md-mode="indeterminate"></md-progress-circular>
+        <filetree ng-if="filteTreeData" root="path" expanded="1" data="filteTreeData"></filetree>
+    </div>
+</div>

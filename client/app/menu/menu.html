@@ -1,0 +1,15 @@
+<md-fab-toolbar md-open="open" md-direction="left">
+    <md-fab-trigger class="align-with-text">
+        <md-button aria-label="menu" class="md-fab md-primary">
+            <ng-md-icon icon="menu" style="fill:white" size="24"></ng-md-icon>
+        </md-button>
+    </md-fab-trigger>
+    <md-toolbar>
+        <md-fab-actions class="md-toolbar-tools">
+            <md-button ng-click="openProject()">Open <ng-md-icon icon="open_in_browser" style="fill:white" size="24"></ng-md-icon></md-button>
+            <md-button ng-click="newProject()">New Project <ng-md-icon icon="laptop_chromebook" style="fill:white" size="24"></ng-md-icon></md-button>
+            <md-button ng-click="manageGenerator()">Generators <ng-md-icon icon="dashboard" style="fill:white" size="24"></ng-md-icon></md-button>
+            <md-button ui-sref="index" aria-label="Home"><ng-md-icon icon="home" style="fill:white" size="24"></ng-md-icon></md-button>
+        </md-fab-actions>
+    </md-toolbar>
+</md-fab-toolbar>

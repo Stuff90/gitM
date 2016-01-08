@@ -1,0 +1,103 @@
+/*
+ * -------------------------------------------------------------------------------------
+ *
+ * Resets default browser styling
+ *
+ * http://meyerweb.com/eric/tools/css/reset/
+ * v2.0 | 20110126
+ * License: none (public domain)
+ *
+ * -------------------------------------------------------------------------------------
+*/
+
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+/* End of reset library */
+
+// @import 'bootstrap/less/bootstrap.less';
+@import 'font-awesome/less/font-awesome.less';
+@import 'lesshat/build/lesshat';
+@import 'remixins/remixins.less';
+
+html, body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+// @icon-font-path: '/bower_components/bootstrap/fonts/';
+// @fa-font-path: '/bower_components/font-awesome/fonts';
+
+/**
+ * App-wide Styles
+ */
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+.md-select-menu-container {
+    z-index: 999999;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    background-color:#fff;
+}
+
+// injector
+@import 'file/file.less';
+@import 'filetree/filetree.less';
+@import 'generator/generator.less';
+@import 'main/main.less';
+@import 'menu/menu.less';
+@import 'navbar/navbar.less';
+@import 'project/project.less';
+@import 'stdOut/stdOut.less';
+@import 'filetree/filetree.directive.less';
+@import 'modal/modal.less';
+@import 'steps/creator/creator.directive.less';
+@import 'steps/step/step.directive.less';
+// endinjector

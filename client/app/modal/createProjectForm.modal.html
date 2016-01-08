@@ -1,0 +1,42 @@
+<form name="projectForm" ng-submit="validateProjectCreation(project)">
+    <md-content layout-padding>
+        <md-input-container flex>
+            <label>Project name</label>
+            <input required name="appName" ng-model="project.name">
+        </md-input-container>
+        <md-input-container flex>
+            <label>Generator</label>
+            <md-select required name="generatorName" ng-model="project.generator">
+                <md-option ng-repeat="generator in generators" value="{{ generator.name }}">{{ generator.name }}</md-option>
+            </md-select>
+        </md-input-container>
+    </md-content>
+
+    <md-content layout-padding ng-if="project.generator == 'Wordpress'">
+        <md-input-container flex>
+            <label>Theme name</label>
+            <input required name="themeName" ng-model="project.themeName">
+        </md-input-container>
+        <md-input-container flex>
+            <label>Theme version</label>
+            <input required ng-pattern="/^[0-9]+\.[0-9]+\.[0-9]+$/" name="themeVersion" ng-model="project.themeVersion">
+            <div ng-messages="projectForm.themeVersion.$error" role="alert" multiple>
+                <div ng-message="required" class="my-message">You must supply a theme version.</div>
+                <div ng-message="pattern" class="my-message">That doesn't look like a valid version (e.g. 1.0.0).</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex>
+            <label>Author</label>
+            <input required name="author" ng-model="project.author">
+        </md-input-container>
+        <md-input-container flex>
+            <label>Author website</label>
+            <input required name="authorUrl" ng-model="project.authorUrl">
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>App description</label>
+            <textarea ng-model="project.description" columns="1" md-maxlength="150" rows="5"></textarea>
+        </md-input-container>
+        <md-button class="md-raised md-primary">Create</md-button>
+    </md-content>
+</form>

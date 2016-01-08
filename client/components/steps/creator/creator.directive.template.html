@@ -1,0 +1,112 @@
+<section layout="row">
+    <div flex="40" layout-padding>
+
+        <md-button ng-click="newGenerator()" class="md-raised md-primary"><ng-md-icon icon="control_point" style="fill:white" size="24"></ng-md-icon> Add</md-button>
+
+        <md-button ng-click="log()" class="md-raised md-primary"><ng-md-icon icon="textsms" style="fill:white" size="24"></ng-md-icon> log</md-button>
+
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="( generatorName , generator ) in allGenerators">
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{ generatorName }}</h3>
+                    <h3>{{ generator.options.path }}</h3>
+                </div>
+                <div class="md-list-item-text" layout="column">
+                    <md-button class="md-icon-button" aria-label="Open generator"><ng-md-icon icon="launch" style="fill:black" size="22"></ng-md-icon></md-button>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+    <div flex="60">
+        <form ng-submit="saveGenerator()" ng-if="showForm">
+            <md-input-container>
+                <label>Name</label>
+                <input ng-model="activeGenerator.name" required type="text" />
+            </md-input-container>
+            <md-input-container>
+                <label>Default path</label>
+                <input ng-model="activeGenerator.path" required type="text" />
+            </md-input-container>
+
+            <md-container layout="row" layout-align="center center">
+                <div flex="50">
+                    <md-button type="button" ng-click="newStep()" class="md-raised"><ng-md-icon icon="playlist_add" style="fill:black" size="24"></ng-md-icon> Add a step</md-button>
+                </div>
+                <div flex="50">
+                    <div layout="row" layout-align="end end">
+                        <md-button type="button" ng-click="saveGenerator()" class="md-raised md-primary">Save</md-button>
+                    </div>
+                </div>
+            </md-container>
+
+            <md-content class="md-padding" layout="row" layout-wrap layout-align="center start">
+                <div flex="100" layout="column">
+                    <md-card ng-repeat="step in activeGenerator.steps">
+
+                        <md-card-title layout="row" layout-xs="column">
+                            <div flex>
+                                <div layout="row" layout-align="start" layout-padding>
+                                    <md-card-title-text layout-padding class="md-title">Step {{ $index + 1 }} <span ng-if="activeGenerator.steps[$index].params.title">: {{ activeGenerator.steps[$index].params.title }}</span></md-card-title-text>
+                                </div>
+                            </div>
+                            <div flex>
+                                <md-card-actions layout="row" layout-align="end center" layout-padding>
+                                    <md-button type="button" ng-click="toggleStep( $index )" class="md-primary">toggle</md-button>
+                                    <md-button type="button" ng-click="removeStep( $index )" aria-label="Remove step" class="md-icon-button"><ng-md-icon icon="close" style="fill:tomato" size="24"></ng-md-icon></md-button>
+                                </md-card-actions>
+                            </div>
+                        </md-card-title>
+
+                        <md-card-content ng-if="activeGenerator.steps[$index].visible">
+                            <md-input-container>
+                            <label>Type</label>
+                            <md-select ng-model="activeGenerator.steps[$index].type" ng-change="fillDefaultValues( $index , activeGenerator.steps[$index].type )">
+                                <md-option ng-repeat="( stepName , stepDefaultOptions ) in STEPLIST_DEFAULT_OPTIONS" value="{{ stepName }}"> {{ stepDefaultOptions.title }} </md-option>
+                            </md-select>
+                            </md-input-container>
+
+                            <md-container ng-if="activeGenerator.steps[$index].type">
+                                <md-input-container>
+                                    <label>Title</label>
+                                    <input ng-model="activeGenerator.steps[$index].params.title" required type="text" />
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>Description</label>
+                                    <input ng-model="activeGenerator.steps[$index].params.description" required type="text" />
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>Notice</label>
+                                    <input ng-model="activeGenerator.steps[$index].params.notice" type="text" />
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>Error</label>
+                                    <input ng-model="activeGenerator.steps[$index].params.error" type="text" />
+                                </md-input-container>
+
+                                <md-container ng-repeat="requiredField in STEPLIST_DEFAULT_OPTIONS[activeGenerator.steps[$index].type].required">
+                                    <md-input-container>
+                                        <label>{{ requiredField.name }}</label>
+                                        <input ng-model="activeGenerator.steps[$index].params[requiredField.id]" required type="text" />
+                                    </md-input-container>
+                                </md-container>
+                            </md-container>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </md-content>
+        </form>
+
+        <!--
+        error: 'Error',
+        title: 'Clone',
+        branch: 'master',
+        apiUrl: '/api/github',
+        apiRequestType: 'post',
+        notice: 'Git clone notice',
+        description: 'Git clone description',
+         -->
+    </div>
+</section>

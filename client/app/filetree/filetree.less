@@ -1,0 +1,23 @@
+.node {}
+
+.node--parent {
+    .margin(0);
+}
+
+.node--directory {
+    font-weight:500;
+    > .node--parent {
+        .padding-left(20px);
+    }
+}
+.node--file {
+    font-weight:200;
+}
+
+.node--trigger {
+    &:hover {
+        cursor:pointer;
+    }
+}
+
+.node--trigger--open:extend(.node--trigger all) {}

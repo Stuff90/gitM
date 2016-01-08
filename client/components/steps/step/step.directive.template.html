@@ -1,0 +1,14 @@
+<md-list-item class="md-3-line step">
+    <ng-md-icon icon="timer" style="fill:grey" size="32" ng-if="!data.state"></ng-md-icon>
+    <ng-md-icon icon="report_problem" style="fill:red" size="32" ng-if="data.state == 'error'"></ng-md-icon>
+    <ng-md-icon icon="done" style="fill:green" size="32" ng-if="data.state == 'done'"></ng-md-icon>
+    <div class="step--loader-wrapper" ng-if="data.state == 'running'">
+        <md-progress-circular md-mode="indeterminate" md-diameter="25" class="md-warn"></md-progress-circular>
+    </div>
+    <div class="md-list-item-text" layout="column">
+        <h3>{{ data.params.title }}</h3>
+        <h4 ng-bind-html="data.params.description"></h4>
+        <p>{{ data.params.notice }}</p>
+        <p ng-if="data.state == 'error'">{{ data.params.error }}</p>
+    </div>
+</md-list-item>

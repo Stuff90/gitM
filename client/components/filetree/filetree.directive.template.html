@@ -1,0 +1,5 @@
+<div class="filetree" ng-class="isExpanded ? 'expanded' : ''">
+    <md-button ng-click="isDirectory ? toggleChildren() : selectFile()" ng-class="isDirectory ? 'md-primary' : ''">
+        <ng-md-icon icon="{{ isDirectory ? 'folder' : 'insert_drive_file' }}" style="fill:grey" size="18"></ng-md-icon> {{ name }}
+    </md-button>
+</div>
