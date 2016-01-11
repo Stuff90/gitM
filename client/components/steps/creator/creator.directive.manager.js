@@ -14,11 +14,8 @@ function creatorManagerService ( $firebaseObject , $q ) {
                 return self.get( name );
             },
 
-            addGenerator: function( name , options ){
-                return self.add( 'generator' , name , options );
-            },
-
-            addStep: function( name , step ){
+            add: function( name , options ){
+                return self.add( name , options );
             },
 
             list: function(){
@@ -62,7 +59,7 @@ function creatorManagerService ( $firebaseObject , $q ) {
 
             this.exist('generators', name )
                 .then(function(){
-                    var theFbObject = $firebaseObject(self.initRef( 'generators/' + name ))
+                    var theFbObject = $firebaseObject(self.initRef( 'generators/' + name ));
                     deferred.resolve(theFbObject);
                 })
                 .catch(function( error ){
@@ -72,22 +69,31 @@ function creatorManagerService ( $firebaseObject , $q ) {
             return deferred.promise;
         },
 
-        add: function( type , generatorName , options ){
+        add: function( generatorName , options ){
             var self = this,
             deferred = $q.defer();
 
-            this.exist('generators', generatorName )
-                .then(function(){
-                    deferred.reject({ error: 'Invalid name : Already exists' });
-                })
-                .catch(function( error ){
-                    var theFbObject = $firebaseObject(self.initRef( 'generators/' + generatorName ))
-                    theFbObject.$value = options;
-                    theFbObject.$save();
-                    deferred.resolve( theFbObject );
-                });
+
+            if(options.isNew){
+                this.exist('generators', generatorName )
+                    .then(function(){
+                        deferred.reject({ error: 'Invalid name : Already exists' });
+                    })
+                    .catch(function( error ){
+                        self.saveGenerator( generatorName , options );
+                    });
+            } else {
+                self.saveGenerator( generatorName , options );
+            }
 
             return deferred.promise;
+        },
+
+        saveGenerator: function( generatorName , options ){
+            var theFbObject = $firebaseObject(self.initRef( 'generators/' + generatorName ));
+
+            theFbObject.$value = options;
+            theFbObject.$save();
         },
 
         list: function(){
