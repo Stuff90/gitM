@@ -15,7 +15,7 @@ function creatorManagerService ( $firebaseObject , $q ) {
             },
 
             addGenerator: function( name , options ){
-                self.add( 'generator' , name , options );
+                return self.add( 'generator' , name , options );
             },
 
             addStep: function( name , step ){

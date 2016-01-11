@@ -1,16 +1,14 @@
 'use strict';
 
 
-angular.module('creatorModule', ['firebase'])
-    .directive('creator', [ '$compile' , '$http' , 'creatorManagerService', 'STEPLIST_DEFAULT_OPTIONS',
-        function ( $compile , $http , creatorManagerService , STEPLIST_DEFAULT_OPTIONS) {
+angular.module('creatorModule', [ 'firebase' , 'workspaceService' ])
+    .directive('creator', [ '$compile' , '$http' , 'workspaceService' , 'creatorManagerService'  , 'localStorageManagerService' , 'STEPLIST_DEFAULT_OPTIONS',
+        function ( $compile , $http , workspaceService , creatorManagerService , localStorageManagerService , STEPLIST_DEFAULT_OPTIONS) {
 
         return {
             restrict: 'E',
             replace: true,
-            scope: {
-                data: '='
-            },
+            scope: {},
             templateUrl: '/components/steps/creator/creator.directive.template.html',
             link: function( scope , element , attrs ){
 
@@ -20,43 +18,33 @@ angular.module('creatorModule', ['firebase'])
                  *
                  */
 
-                scope.STEPLIST_DEFAULT_OPTIONS = STEPLIST_DEFAULT_OPTIONS;
-                scope.saveGenerator            = saveGenerator;
-                scope.newGenerator             = newGenerator;
-                scope.removeStep               = removeStep;
-                scope.toggleStep               = toggleStep;
-                scope.newStep                  = newStep;
-                scope.showForm                 = false;
-                scope.activeGeneratorSaved     = true;
                 scope.activeGenerator          = {};
+                scope.showForm                 = false;
+                scope.activeGeneratorState     = 'saved';
+                scope.STEPLIST_DEFAULT_OPTIONS = STEPLIST_DEFAULT_OPTIONS;
 
-                // var newGenerator = {
-                //     options: {
-                //         path: '/'
-                //     }
-                // }
+                scope.$watch('activeGenerator' , activeGeneratorChanged , true );
 
-                console.info(STEPLIST_DEFAULT_OPTIONS);
+                creatorManagerService.list().then(populateGeneratorsList);
 
-                // creatorManagerService.addGenerator( 'gen-name' , newGenerator );
+                // Private method
 
-                creatorManagerService.list().then(function( allGenerators ){
-                    scope.allGenerators = allGenerators;
-
-                    console.info(scope.allGenerators);
-                })
+                scope.newStep           = newStep;
+                scope.removeStep        = removeStep;
+                scope.toggleStep        = toggleStep;
+                scope.newGenerator      = newGenerator;
+                scope.saveGenerator     = saveGenerator;
+                scope.fillDefaultValues = fillDefaultValues;
+                scope.validateGenerator = validateGenerator;
 
 
-
+                // TO DELETE
                 scope.log = function(){
+                    console.info(scope);
+
                     console.info(scope.activeGenerator);
                 }
 
-
-
-                scope.fillDefaultValues = function( $index , type ){
-                    scope.activeGenerator.steps[$index].params = angular.extend({} , STEPLIST_DEFAULT_OPTIONS[type] , scope.activeGenerator.steps[$index].params );
-                }
 
                 /**
                  *
@@ -66,8 +54,34 @@ angular.module('creatorModule', ['firebase'])
 
 
 
+                function fillDefaultValues( $index , type ){
+                    scope.activeGenerator.steps[$index].params = {};
+                    scope.activeGenerator.steps[$index].params = angular.extend({} , STEPLIST_DEFAULT_OPTIONS[type] , scope.activeGenerator.steps[$index].params );
+                }
+
+
+
+                function validateGenerator(){
+                    console.info('Validation error');
+                }
+
+
+
+                function populateGeneratorsList( allGenerators ){
+                    scope.allGenerators = allGenerators;
+                }
+
+
+
+                function activeGeneratorChanged( modifiedGenerator ){
+                    if( scope.showForm && scope.activeGeneratorState !== 'saved') {
+                        scope.activeGeneratorState = 'unsaved';
+                    }
+                }
+
+
+
                 function removeStep( $index ){
-                    scope.activeGeneratorSaved = false;
                     for (var i = scope.activeGenerator.steps.length - 1; i >= 0; i--) {
                         if(i === $index) {
                             scope.activeGenerator.steps.splice(i , 1);
@@ -89,15 +103,16 @@ angular.module('creatorModule', ['firebase'])
 
 
 
-                // function saveGenerator(){
-                //     if( scope.showForm && !scope.activeGeneratorSaved) {
-                //     }
-                // }
-
-
-
                 function saveGenerator(){
-                    if( scope.showForm && !scope.activeGeneratorSaved) {
+                    if( scope.showForm && scope.activeGeneratorState === 'unsaved') {
+                        scope.activeGeneratorState = 'saving';
+
+                        var u = creatorManagerService.addGenerator( scope.activeGenerator.name , scope.activeGenerator );
+                        u.then(function(y){
+                            console.info(1,y);
+                        }).catch(function(y){
+                            console.info(2,y);
+                        })
                     }
                 }
 
@@ -107,7 +122,7 @@ angular.module('creatorModule', ['firebase'])
                 function newStep(){
                     if(scope.showForm) {
                         toggleStep(-1);
-                        scope.activeGeneratorSaved = false;
+                        scope.activeGeneratorState = 'unsaved';
                         scope.activeGenerator.steps.push({
                             visible:true,
                             active:true,
@@ -118,12 +133,13 @@ angular.module('creatorModule', ['firebase'])
 
 
                 function newGenerator(){
-                    if(scope.activeGeneratorSaved){
+                    if(scope.activeGeneratorState === 'saved' ){
                         scope.showForm = true;
-                        scope.activeGeneratorSaved = false;
+                        scope.activeGeneratorState = 'unsaved';
 
                         scope.activeGenerator = {
                             steps: [],
+                            path: workspaceService.get(),
                             params: {},
                         }
                     } else {

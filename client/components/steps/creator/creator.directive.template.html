@@ -6,7 +6,7 @@
         <md-button ng-click="log()" class="md-raised md-primary"><ng-md-icon icon="textsms" style="fill:white" size="24"></ng-md-icon> log</md-button>
 
         <md-list>
-            <md-list-item class="md-3-line" ng-repeat="( generatorName , generator ) in allGenerators">
+            <md-list-item class="md-3-line" ng-repeat="( generatorName , generator ) in allGenerators | orderBy:'generatorName'">
                 <div class="md-list-item-text" layout="column">
                     <h3>{{ generatorName }}</h3>
                     <h3>{{ generator.options.path }}</h3>
@@ -24,7 +24,7 @@
                 <input ng-model="activeGenerator.name" required type="text" />
             </md-input-container>
             <md-input-container>
-                <label>Default path</label>
+                <label>Root path</label>
                 <input ng-model="activeGenerator.path" required type="text" />
             </md-input-container>
 
@@ -34,7 +34,13 @@
                 </div>
                 <div flex="50">
                     <div layout="row" layout-align="end end">
-                        <md-button type="button" ng-click="saveGenerator()" class="md-raised md-primary">Save</md-button>
+                        <div layout>
+                            <md-progress-circular md-mode="indeterminate" ng-if="activeGeneratorState === 'saving'" md-diameter="35" class="md-primary"></md-progress-circular>
+                            <div>
+                                <br><br>
+                                <md-button type="submit" ng-disabled="activeGeneratorState === 'saving'" class="md-raised md-primary">Save</md-button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </md-container>
