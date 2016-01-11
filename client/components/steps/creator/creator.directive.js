@@ -33,6 +33,7 @@ angular.module('creatorModule', [ 'firebase' , 'workspaceService' ])
                 scope.removeStep        = removeStep;
                 scope.toggleStep        = toggleStep;
                 scope.newGenerator      = newGenerator;
+                scope.openGenerator     = openGenerator;
                 scope.saveGenerator     = saveGenerator;
                 scope.fillDefaultValues = fillDefaultValues;
                 scope.validateGenerator = validateGenerator;
@@ -51,6 +52,24 @@ angular.module('creatorModule', [ 'firebase' , 'workspaceService' ])
                  * PRIVATE
                  *
                  */
+
+
+
+                function openGenerator( generatorName ){
+                    if( !scope.showForm || ( scope.showForm && scope.activeGeneratorState === 'saved' )) {
+                        creatorManagerService.get( generatorName ).then(function( result ) {
+                            scope.showForm = true;
+                            scope.activeGenerator = {
+                                name: result.name,
+                                path: result.path,
+                                params: result.params || {},
+                                steps: result.steps || [],
+                            };
+                        });
+                    } else {
+                        console.info('Unable to load');
+                    }
+                }
 
 
 
@@ -108,10 +127,10 @@ angular.module('creatorModule', [ 'firebase' , 'workspaceService' ])
                         scope.activeGeneratorState = 'saving';
 
                         var cleanGenerator = angular.copy(scope.activeGenerator),
-                        generatorPromise   = creatorManagerService.addGenerator( cleanGenerator.name , cleanGenerator );
+                        generatorPromise   = creatorManagerService.add( cleanGenerator.name , cleanGenerator );
 
-                        generatorPromise.then(function(y){
-                            console.info(1,y);
+                        generatorPromise.then(function( result ){
+                            scope.activeGeneratorState = 'saved'
                         })
                         generatorPromise.catch(function( result ){
                             console.error(result);
@@ -142,8 +161,9 @@ angular.module('creatorModule', [ 'firebase' , 'workspaceService' ])
 
                         scope.activeGenerator = {
                             steps: [],
-                            path: workspaceService.get(),
                             params: {},
+                            isNew: true,
+                            path: workspaceService.get(),
                         }
                     } else {
                         console.info('unsaved');
