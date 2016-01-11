@@ -107,11 +107,14 @@ angular.module('creatorModule', [ 'firebase' , 'workspaceService' ])
                     if( scope.showForm && scope.activeGeneratorState === 'unsaved') {
                         scope.activeGeneratorState = 'saving';
 
-                        var u = creatorManagerService.addGenerator( scope.activeGenerator.name , scope.activeGenerator );
-                        u.then(function(y){
+                        var cleanGenerator = angular.copy(scope.activeGenerator),
+                        generatorPromise   = creatorManagerService.addGenerator( cleanGenerator.name , cleanGenerator );
+
+                        generatorPromise.then(function(y){
                             console.info(1,y);
-                        }).catch(function(y){
-                            console.info(2,y);
+                        })
+                        generatorPromise.catch(function( result ){
+                            console.error(result);
                         })
                     }
                 }
